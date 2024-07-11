@@ -2,7 +2,7 @@ import { Product } from "@/models/Product";
 import { faker } from '@faker-js/faker';
 
 
-export function createRandomUser() {
+export function createRandomProduct() {
   return {
     name: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
@@ -10,9 +10,9 @@ export function createRandomUser() {
   };
 }
 
-class GenerateProductsUseCase {
+class GenerateRandomProductsUseCase {
   async handle(userId: number): Promise<void> {
-    const products = faker.helpers.multiple(createRandomUser, {
+    const products = faker.helpers.multiple(createRandomProduct, {
       count: 50,
     });
 
@@ -27,4 +27,4 @@ class GenerateProductsUseCase {
   }
 }
 
-export { GenerateProductsUseCase };
+export { GenerateRandomProductsUseCase };
