@@ -10,7 +10,7 @@ class DeleteProuctUseCase {
     })
 
     if (!product) {
-      throw new AppError("ERR_PRODUCT_NOT_FOUND");
+      throw new AppError("ERR_PRODUCT_NOT_FOUND", 404);
     }
 
     await product.destroy();

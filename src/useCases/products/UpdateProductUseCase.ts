@@ -1,8 +1,15 @@
+import { ICreateProductDTO, productSchema } from "@/dtos/CreateProductDTO";
 import { AppError } from "@/errors/AppError";
 import { Product } from "@/models/Product";
+import { ZodIssue } from "zod";
 
 class CreateProductUseCase {
-  async handle({ id, name, description, price, userId }: ICreateProductDTO): Promise<Product> {
+  async handle({ name, description, price }: ICreateProductDTO, userId: number, id: number): Promise<ZodIssue[] | Product> {
+    const result = await productSchema.safeParseAsync({ name, description, price })
+
+    if (!result.success) {
+      return result.error.issues
+    }
     const product = await Product.findOne({
       where: {
         id
@@ -10,7 +17,7 @@ class CreateProductUseCase {
     })
 
     if (!product) {
-      throw new AppError("ERR_PRODUCT_NOT_FOUND");
+      throw new AppError("ERR_PRODUCT_NOT_FOUND", 404);
     }
 
     product.set({
