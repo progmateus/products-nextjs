@@ -37,7 +37,7 @@ UsersTokens.init(
     }
   },
   {
-    tableName: "users",
+    tableName: "UsersTokens",
     sequelize
   }
 )

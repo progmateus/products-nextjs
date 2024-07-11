@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "@/database";
 
-class User extends Model {
+class Product extends Model {
   declare id: number;
 
   declare name: string;
@@ -17,7 +17,7 @@ class User extends Model {
   declare updatedAt: Date;
 }
 
-User.init(
+Product.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -45,11 +45,11 @@ User.init(
     }
   },
   {
-    tableName: "users",
+    tableName: "Products",
     sequelize,
     createdAt: "createdAt",
     updatedAt: "updatedAt"
   }
 )
 
-export { User };
+export { Product };
