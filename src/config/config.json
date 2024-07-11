@@ -1,0 +1,10 @@
+{
+  "username": "admin",
+  "password": "admin",
+  "database": "database",
+  "host": "localhost",
+  "dialect": "postgres",
+  "define": {
+    "timestamps": true
+  }
+}
