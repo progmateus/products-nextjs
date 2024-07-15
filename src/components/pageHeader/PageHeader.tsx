@@ -62,7 +62,7 @@ export default function PageHeader() {
     <main className="flex justify-center mt-16">
       <div className="flex flex-col h-40 w-full justify-center items-center">
         <div className="text-2xl font-medium"> Buscar </div>
-        <div className="flex justify-center w-full p-3 space-x-2 mt-8">
+        <div className="flex flex-col gap-6 justify-center w-full p-3 space-x-2 mt-8">
           <Input
             name="search"
             placeholder="Buscar..."
@@ -73,9 +73,9 @@ export default function PageHeader() {
             }
           />
           <div className="h-8 flex items-center gap-2">
-            <Button title="Criar" onClick={handleClickCreate} classes="w-16 h-8" />
-            <Button title="Gerar" onClick={handleGenerate} classes="w-16 h-8 bg-purple-600 hover:bg-purple-500" isLoading={isGenerating} />
-            <Button title="Deletar" onClick={handleDeleteAllProducts} classes="w-16 h-8 bg-red-600 hover:bg-red-500" isLoading={isDeleting} />
+            <Button title="Criar" onClick={handleClickCreate} classes="h-8" />
+            <Button title="Gerar" onClick={handleGenerate} classes="h-8 bg-purple-600 hover:bg-purple-500" isLoading={isGenerating} />
+            <Button title="Deletar Todos" onClick={handleDeleteAllProducts} classes="w-96 h-8 bg-red-600 hover:bg-red-500" isLoading={isDeleting} />
           </div>
         </div>
       </div>
