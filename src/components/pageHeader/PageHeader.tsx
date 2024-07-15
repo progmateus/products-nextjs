@@ -42,7 +42,6 @@ export default function PageHeader() {
   const handleGenerate = () => {
     setIsGenerating(true)
     GenerateRandomProductsService().then(({ data }) => {
-      console.log(data)
       handleSetProducts(data)
     }).finally(() => {
       setIsGenerating(false)
