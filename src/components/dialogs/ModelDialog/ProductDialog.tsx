@@ -17,7 +17,7 @@ type IProps = DialogHTMLAttributes<HTMLDialogElement> & {
 const createProductSchema = z.object({
   name: z.string().min(3, "Min 3 caracteres").max(80, "Max 80 caracteres"),
   description: z.string().min(3, "Min 3 caracteres").max(200, "Max 200 caracteres"),
-  price: z.string()
+  price: z.string().regex(/^\s*\d{1,3}([0-9])*,\d{2}$)?/gi, "Valor inválido. apenas números (0-9) e ( , )")
 });
 
 type CreateProductProps = z.infer<typeof createProductSchema>
@@ -53,9 +53,16 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
   }
 
 
-  const handleCreate = (data: CreateProductProps) => {
+  const handleCreate = ({ name, description, price }: CreateProductProps) => {
+    if (isLoading) {
+      return;
+    }
     setIsLoading(true)
-    CreateProductService(data).then((res) => {
+    CreateProductService({
+      name,
+      description,
+      price: Number(price)
+    }).then((res) => {
       const { data } = res;
       handleSetProducts([...products, data])
     }).finally(() => {
@@ -65,7 +72,7 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
   }
 
   const handleEdit = (data: CreateProductProps) => {
-    if (!selectedProduct) {
+    if (!selectedProduct || isLoading) {
       return
     }
     setIsLoading(true)
@@ -74,7 +81,7 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
       id: selectedProduct.id,
       description,
       name,
-      price
+      price: Number(price)
     }).then((res) => {
       const { data } = res;
       const productIndex = products.findIndex((p) => p.id === data.id)
@@ -105,7 +112,7 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
         <div className="flex flex-col gap-5">
           <Input label="Nome" errorMessage={errors.name?.message} {...register("name")} />
           <Input label="Descrição" errorMessage={errors.description?.message} {...register("description")} />
-          <Input label="Preço" type="number" errorMessage={errors.price?.message} {...register("price")} />
+          <Input label="Preço" errorMessage={errors.price?.message} {...register("price")} />
         </div>
         <div className="flex mt-8 h-10">
           <Button title={selectedProduct ? 'EDITAR' : 'CADASTRAR'} type="submit" isLoading={isLoading} />
