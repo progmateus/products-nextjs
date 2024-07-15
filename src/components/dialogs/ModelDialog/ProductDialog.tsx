@@ -61,7 +61,7 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
     CreateProductService({
       name,
       description,
-      price: Number(price)
+      price: Number(price.replace(".", "").replace(',', '.'))
     }).then((res) => {
       const { data } = res;
       handleSetProducts([...products, data])
@@ -81,7 +81,7 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
       id: selectedProduct.id,
       description,
       name,
-      price: Number(price)
+      price: Number(price.replace(".", "").replace(',', '.'))
     }).then((res) => {
       const { data } = res;
       const productIndex = products.findIndex((p) => p.id === data.id)
