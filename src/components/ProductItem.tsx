@@ -10,6 +10,14 @@ interface IProps {
 export default function ProductItem({ product }: IProps) {
   const { handleSetSelectedProduct } = useProducts()
 
+  const formCurrency = (value: number) => {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2
+    }).format(value)
+  }
+
   return (
     <div className="flex flex-col group w-60 h-80 gap-2 p-4 border border-zinc-300 rounded-lg">
       <div className="flex justify-center">
@@ -21,7 +29,7 @@ export default function ProductItem({ product }: IProps) {
 
       <div className="line-clamp-2 break-words text-xs text-zinc-500"> {product.description} </div>
 
-      <div className="flex line-clamp-3 break-words font-medium text-lg text-green-600 mt-auto mb-4"> R$ {product.price}</div>
+      <div className="flex line-clamp-3 break-words font-medium text-lg text-green-600 mt-auto mb-4"> {formCurrency(product.price)}</div>
 
       <div
         onClick={() => handleSetSelectedProduct(product)}
