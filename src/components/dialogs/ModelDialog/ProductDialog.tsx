@@ -17,7 +17,7 @@ type IProps = DialogHTMLAttributes<HTMLDialogElement> & {
 const createProductSchema = z.object({
   name: z.string().min(3, "Min 3 caracteres").max(80, "Max 80 caracteres"),
   description: z.string().min(3, "Min 3 caracteres").max(200, "Max 200 caracteres"),
-  price: z.string().regex(/^\s*\d{1,3}([0-9])*,\d{2}$)?/gi, "Valor inválido. apenas números (0-9) e ( , )")
+  price: z.string().regex(/^\s*\d{1,3}([0-9])*(,\d{2}$)?/gi, "Valor inválido. apenas números (0-9) e ( , )")
 });
 
 type CreateProductProps = z.infer<typeof createProductSchema>
