@@ -10,12 +10,12 @@ interface IProps {
 export default function ProductItem({ product }: IProps) {
   const { handleSetSelectedProduct } = useProducts()
 
-  const formCurrency = (value: number) => {
+  const formCurrency = (value: number | string) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
       minimumFractionDigits: 2
-    }).format(value)
+    }).format(Number(value))
   }
 
   return (

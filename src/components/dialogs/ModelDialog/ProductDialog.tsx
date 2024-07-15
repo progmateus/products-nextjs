@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/Input/Input";
-import { CreateProductService } from "@/services/productsService";
+import { CreateProductService, UpdateProductService } from "@/services/productsService";
 import "./styles.module.css"
 import { useProducts } from "@/contexts/ProductsContext";
 
@@ -24,11 +24,11 @@ type CreateProductProps = z.infer<typeof createProductSchema>
 
 export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset, setValue } = useForm<CreateProductProps>({
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<CreateProductProps>({
     resolver: zodResolver(createProductSchema)
   });
-  const { selectedProduct, handleSetSelectedProduct } = useProducts()
-
+  const { selectedProduct, handleSetSelectedProduct, products, handleSetProducts } = useProducts()
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
@@ -43,10 +43,49 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
     }
   }, [isOpen])
 
+  const handleAction = (data: CreateProductProps) => {
+
+    if (selectedProduct) {
+      handleEdit(data)
+    } else {
+      handleCreate(data)
+    }
+  }
+
+
   const handleCreate = (data: CreateProductProps) => {
+    setIsLoading(true)
     CreateProductService(data).then((res) => {
       const { data } = res;
-      console.log('data: ', data)
+      handleSetProducts([...products, data])
+    }).finally(() => {
+      setIsLoading(false)
+      setIsOpen(false)
+    })
+  }
+
+  const handleEdit = (data: CreateProductProps) => {
+    if (!selectedProduct) {
+      return
+    }
+    setIsLoading(true)
+    const { description, name, price } = data;
+    UpdateProductService({
+      id: selectedProduct.id,
+      description,
+      name,
+      price
+    }).then((res) => {
+      const { data } = res;
+      const productIndex = products.findIndex((p) => p.id === data.id)
+      if (productIndex !== -1) {
+        const productsArray = products;
+        productsArray[productIndex] = data;
+        handleSetProducts(productsArray)
+      }
+    }).finally(() => {
+      setIsLoading(false)
+      setIsOpen(false)
     })
   }
 
@@ -56,7 +95,7 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
 
   return (
     <div className="fixed top-0 bottom-0 left-0 right-0 z-50 bg-zinc-900 bg-opacity-60">
-      <form onSubmit={handleSubmit(handleCreate)} className="fixed top-1/2 left-1/2 min-w-96 bg-white rounded-lg text-zinc-800 p-4 -translate-y-1/2 -translate-x-1/2" >
+      <form onSubmit={handleSubmit(handleAction)} className="fixed top-1/2 left-1/2 min-w-96 bg-white rounded-lg text-zinc-800 p-4 -translate-y-1/2 -translate-x-1/2" >
         <div className="flex justify-between h-8 mb-4">
           <h2> {selectedProduct ? 'Editar' : 'Cadastrar'} Produto</h2>
           <span className="hover:cursor-pointer" onClick={() => setIsOpen(false)}>
@@ -69,7 +108,7 @@ export const ProductDialog = ({ isOpen, setIsOpen }: IProps) => {
           <Input label="Preço" type="number" errorMessage={errors.price?.message} {...register("price")} />
         </div>
         <div className="flex mt-8 h-10">
-          <Button title={selectedProduct ? 'EDITAR' : 'CADASTRAR'} type="submit" isLoading={isSubmitting} />
+          <Button title={selectedProduct ? 'EDITAR' : 'CADASTRAR'} type="submit" isLoading={isLoading} />
         </div>
       </form>
     </div>
