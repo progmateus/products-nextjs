@@ -4,13 +4,11 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/products')) {
     if (!request.cookies.has("products-challenge.token")) {
-      console.log('entrou no primeiro if')
       return NextResponse.rewrite(new URL('/', request.url))
     }
   }
 
   if (request.cookies.has("products-challenge.token")) {
-    console.log('entrou no segundo if')
     return NextResponse.rewrite(new URL('/products', request.url))
   }
 
