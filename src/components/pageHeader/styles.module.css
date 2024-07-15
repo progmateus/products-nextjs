@@ -1,0 +1,43 @@
+.main {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.search-container {
+  height: 10rem;
+  display: flex;
+  align-items: center;
+  width: 30rem;
+  justify-content: center;
+  text-align: center;
+}
+
+.search-container>div {
+  width: 100%;
+}
+
+.search-container>div>h1 {
+  margin-bottom: 2rem;
+}
+
+.input {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.continer-button {
+  width: 4rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+}
