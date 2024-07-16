@@ -10,9 +10,9 @@ let failedRequestQueue: any[] = [];
 export function setupAPIClient(ctx = undefined) {
 
   let cookies = parseCookies(ctx);
-
+  console.log("process.env.API_URL: ", process.env.API_URL)
   const api = axios.create({
-    baseURL: "http://localhost:3333",
+    baseURL: process.env.API_URL,
     headers: {
       Authorization: `Bearer ${cookies['products-challenge.token']}`
     }
