@@ -1,7 +1,7 @@
 'use client'
 import PageHeader from "@/components/pageHeader/PageHeader";
 import ProductItem from "@/components/ProductItem";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { ListProductsService } from "@/services/productsService";
 import { IProductDTO } from "@/dtos/IProductDTO";
 import { useSearchParams } from 'next/navigation'
