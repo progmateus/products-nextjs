@@ -3,7 +3,7 @@
 ### Repositório frontend [https://github.com/progmateus/products-nextjs](https://github.com/progmateus/products-nextjs)
 ### Repositório backend [https://github.com/progmateus/products-challenge-backend](https://github.com/progmateus/products-challenge-backend)
 ### Deploy [https://products-nextjs-theta.vercel.app/](https://products-nextjs-theta.vercel.app/)
-### Documentação (API) [https://github.com/progmateus/products-challenge-backend/docs](https://github.com/progmateus/products-challenge-backend/docs)
+### Documentação (API) [https://products-challenge-backend.vercel.app/docs](https://products-challenge-backend.vercel.app/docs)
 
 ## Reproduzir localmente
 
