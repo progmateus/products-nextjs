@@ -31,12 +31,17 @@ export default function SignIn() {
   const { signIn } = useAuth()
 
   const [isError, setIsError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSignIn = () => {
+    if (isLoading) {
+      return
+    }
     if (!isValid) {
       setIsError(!isValid)
       return;
     }
+    setIsLoading(true)
     signIn({
       email: getValues("email"),
       password: getValues("password")
@@ -44,6 +49,8 @@ export default function SignIn() {
       if (err !== "Error: NEXT_REDIRECT") {
         setIsError(true)
       }
+    }).finally(() => {
+      setIsLoading(false)
     })
   }
 
@@ -57,7 +64,7 @@ export default function SignIn() {
           <Input label="Senha" errorMessage={errors.password?.message} {...register("password")} />
         </div>
         <div className="flex h-10 mt-4 w-full">
-          <Button title="ENTRAR" onClick={handleSignIn} />
+          <Button title="ENTRAR" onClick={handleSignIn} isLoading={isLoading} />
         </div>
         <div className="text-sm text-red-600 -mt-8 w-"> {isError ? "E-mail ou senha inválidos" : ""}</div>
         <div className="text-center text-sm font-light -mt-4 text-zinc-600"> Ainda não tem acesso?</div>
