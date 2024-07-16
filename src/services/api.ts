@@ -10,7 +10,6 @@ let failedRequestQueue: any[] = [];
 export function setupAPIClient(ctx = undefined) {
 
   let cookies = parseCookies(ctx);
-  console.log("process.env.API_URL: ", process.env.API_URL)
   const api = axios.create({
     baseURL: process.env.API_URL,
     headers: {
