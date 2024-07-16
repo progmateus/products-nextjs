@@ -11,7 +11,7 @@ export function setupAPIClient(ctx = undefined) {
 
   let cookies = parseCookies(ctx);
   const api = axios.create({
-    baseURL: process.env.API_URL,
+    baseURL: "https://products-challenge-backend.vercel.app/",
     headers: {
       Authorization: `Bearer ${cookies['products-challenge.token']}`
     }
